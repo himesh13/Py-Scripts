@@ -35,7 +35,7 @@ one_year_old_date = (datetime.datetime.now().date() - datetime.timedelta(days=18
 search_repo(start_date=one_year_old_date,
             out_file='repos.csv',
             api_token=GITHUB_API_TOKEN,
-            stars=20000,
+            stars=40000,
             lang='Java',
             verbose=True)
 

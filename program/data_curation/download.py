@@ -6,7 +6,8 @@ import sys
 
 #ALL_REPOS_FILE ="/Users/himesh/Library/CloudStorage/OneDrive-DalhousieUniversity/Thesis/Mootex/run2/eval/final_dataset.csv"
 #ALL_REPOS_FILE =base+"final_dataset.csv"
-base ="C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/BroadRelease/Dataset"
+base = "/home/himesh/Tagman-java/temp"
+#"C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/BroadRelease/Dataset"
 ALL_REPOS_FILE=base+"/dataset-trial.csv"
 REPO_STORE_ROOT = base+"output"
 REPOS_TO_DOWNLOAD=20
