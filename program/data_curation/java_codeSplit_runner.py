@@ -6,7 +6,9 @@ def _run_code_split(folder_name, folder_path, code_split_result_folder, code_spl
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
     print("debug --"+ code_split_exe_path+"||"+folder_path+"||"+out_folder+"||"+code_split_mode)
-    subprocess.call(["C:/Users/Himesh/.jdks/openjdk-18.0.2.1/bin/java", "-jar", code_split_exe_path,
+    #subprocess.call(["C:/Users/Himesh/.jdks/openjdk-18.0.2.1/bin/java", "-jar", code_split_exe_path,
+    subprocess.call(["java", "-jar", code_split_exe_path,
+    
                      "-i", folder_path, "-o", out_folder, "-m", code_split_mode])
 
 def java_code_split(repo_source_folder, code_split_mode, code_split_result_folder, code_split_exe_path):
