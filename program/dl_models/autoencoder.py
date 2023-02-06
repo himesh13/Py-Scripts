@@ -22,8 +22,8 @@ import configuration
 DIM = "1d"
 LABELS = ["Normal", "Smell"]
 
-TOKENIZER_OUT_PATH = "/users/pa18/tushar/smellDetectionML/data/tokenizer_out/"
-OUT_FOLDER = "/users/pa18/tushar/smellDetectionML/learning_smells/results/rq1/raw"
+TOKENIZER_OUT_PATH = "/home/himesh/TagCoder/tokenizer_out_java/"
+OUT_FOLDER = "/home/himesh/TagCoder/result"
 # TOKENIZER_OUT_PATH = r"..\..\data\tokenizer_out"
 # OUT_FOLDER = r"..\results\rq1\raw"
 TRAIN_VALIDATE_RATIO = 0.7
