@@ -9,7 +9,9 @@ def _run_designite_java(folder_name, folder_path, designiteJava_jar_path, smells
     if not os.path.exists(out_folder):
         os.makedirs(out_folder)
     # logfile = os.path.join(out_folder, "log.txt")
-    proc = Popen(["C:/Users/Himesh/.jdks/openjdk-18.0.2.1/bin/java", "-jar", designiteJava_jar_path, "-i", folder_path, "-o", out_folder])
+    proc = Popen(["java", "-jar", designiteJava_jar_path, "-i", folder_path, "-o", out_folder])
+   
+   # proc = Popen(["C:/Users/Himesh/.jdks/openjdk-18.0.2.1/bin/java", "-jar", designiteJava_jar_path, "-i", folder_path, "-o", out_folder])
     proc.wait()
 
 
@@ -22,8 +24,9 @@ def _build_project(dir, dir_path):
         print("Found pom.xml")
         os.chdir(dir_path)
         my_env = os.environ.copy()
-        my_env["JAVA_HOME"] = "C:/Users/Himesh/.jdks/openjdk-18.0.2.1"
-        proc = Popen(['C:/Program Files/apache-maven-3.8.6-bin/apache-maven-3.8.6/bin/mvn', 'clean', 'install', '-DskipTests'],shell=True,env=my_env)
+        #my_env["JAVA_HOME"] = "C:/Users/Himesh/.jdks/openjdk-18.0.2.1"
+        #proc = Popen(['C:/Program Files/apache-maven-3.8.6-bin/apache-maven-3.8.6/bin/mvn', 'clean', 'install', '-DskipTests'],shell=True,env=my_env)
+        proc = Popen(['mvn', 'clean', 'install', '-DskipTests'],shell=True,env=my_env)
         proc.wait()
         is_compiled = True
 
@@ -31,9 +34,10 @@ def _build_project(dir, dir_path):
     if os.path.exists(gradle_path):
         print("Found build.gradle")
         my_env = os.environ.copy()
-        my_env["JAVA_HOME"] = "C:/Users/Himesh/.jdks/openjdk-18.0.2.1"
+        #my_env["JAVA_HOME"] = "C:/Users/Himesh/.jdks/openjdk-18.0.2.1"
         os.chdir(dir_path)
-        proc = Popen(['C:/Users/Himesh/Documents/gradle-6/gradle-6.0/bin', 'build','-x','test'],shell=True,env=my_env)
+        proc = Popen(['gradle', 'build','-x','test'],shell=True,env=my_env)
+        #proc = Popen(['C:/Users/Himesh/Documents/gradle-6/gradle-6.0/bin', 'build','-x','test'],shell=True,env=my_env)
         proc.wait()
         is_compiled = True
     if not is_compiled:
