@@ -6,11 +6,11 @@ import sys
 
 #ALL_REPOS_FILE ="/Users/himesh/Library/CloudStorage/OneDrive-DalhousieUniversity/Thesis/Mootex/run2/eval/final_dataset.csv"
 #ALL_REPOS_FILE =base+"final_dataset.csv"
-base = "/home/himesh/Tagman-java/temp"
-#"C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/BroadRelease/Dataset"
-ALL_REPOS_FILE=base+"/dataset-trial.csv"
-REPO_STORE_ROOT = base+"output"
-REPOS_TO_DOWNLOAD=20
+#base ="C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/BroadRelease/final"
+base = "/home/himesh/TagCoder"
+ALL_REPOS_FILE=base+"/csv/final-dataset.csv"
+REPO_STORE_ROOT = base+"/output"
+REPOS_TO_DOWNLOAD=2   
 
 def downloadRepo(repoName):
     fullRepoName = "https://github.com/" + repoName + ".git"

@@ -17,8 +17,8 @@ import java_learning_data_generator
 
 # -- Parameters --
 #DATA_BASE_PATH = r'/Users/himesh/Documents/DL-thesis-ref-master/DeepLearningSmells-master/data'
-DATA_BASE_PATH = "C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/BroadRelease"
-
+#DATA_BASE_PATH = "C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/BroadRelease/final"
+DATA_BASE_PATH = "/home/himesh/TagCoder"
 CS_REPO_SOURCE_FOLDER = DATA_BASE_PATH + r'\all_cs_repos'
 BATCH_FILES_FOLDER = DATA_BASE_PATH + r'\BatchFiles'
 CS_SMELLS_RESULTS_FOLDER = DATA_BASE_PATH + '/designite_out'
@@ -34,19 +34,19 @@ CS_LEARNING_DATA_FOLDER_BASE = DATA_BASE_PATH + r'\training_data'
 # CS_LEARNING_DATA_FOLDER_BASE = "/Users/Tushar/Documents/Research/smellDetectionML/data/smellML_Data_cs"
 
 # TOKENIZER_EXE_PATH = "/Users/Tushar/Documents/Research/smellDetectionML/tokenizer/src/tokenizer"
-TOKENIZER_EXE_PATH = '/usr/local/bin/tokenizer'
+TOKENIZER_EXE_PATH = '/home/himesh/TagCoder/tokenizer/src/tokenizer'
 CS_TOKENIZER_OUT_PATH = DATA_BASE_PATH + '/tokenizer_out'
 # CS_TOKENIZER_OUT_PATH = "/Users/Tushar/Documents/Research/smellDetectionML/data/tokenizer_out_cs"
 
-JAVA_REPO_SOURCE_FOLDER = DATA_BASE_PATH+'/Datasetoutput'
+JAVA_REPO_SOURCE_FOLDER = DATA_BASE_PATH+'/output'
 JAVA_SMELLS_RESULTS_FOLDER = DATA_BASE_PATH + '/designite_out_java'
-DESIGNITE_JAVA_JAR_PATH = r'C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/Designite/DesigniteJava.jar'
+DESIGNITE_JAVA_JAR_PATH = DATA_BASE_PATH+"/designite/DesigniteJava.jar"
 
 JAVA_CODE_SPLIT_OUT_FOLDER_CLASS = DATA_BASE_PATH + '/codesplit_java_class'
 JAVA_CODE_SPLIT_OUT_FOLDER_METHOD = DATA_BASE_PATH + '/codesplit_java_method'
 JAVA_CODE_SPLIT_MODE_CLASS = "class"
 JAVA_CODE_SPLIT_MODE_METHOD = "method"
-JAVA_CODE_SPLIT_EXE_PATH = 'C:/Users/Himesh/OneDrive - Dalhousie University/Thesis/CodeSplit_1_1_0_0/CodeSplitJava-master/target/CodeSplitJava.jar'
+JAVA_CODE_SPLIT_EXE_PATH = DATA_BASE_PATH+"/csv/CodeSplitJava.jar"
 
 JAVA_LEARNING_DATA_FOLDER_BASE = DATA_BASE_PATH + '/smellML_data_java'
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     # 7. Run learning data generator that will classify java code fragments into either positive or negative cases
     #     # based on occurrence of smell in that fragment
-    #java_learning_data_generator.generate_data(JAVA_SMELLS_RESULTS_FOLDER, JAVA_CODE_SPLIT_OUT_FOLDER_CLASS,JAVA_CODE_SPLIT_OUT_FOLDER_METHOD, JAVA_LEARNING_DATA_FOLDER_BASE)
+    java_learning_data_generator.generate_data(JAVA_SMELLS_RESULTS_FOLDER, JAVA_CODE_SPLIT_OUT_FOLDER_CLASS,JAVA_CODE_SPLIT_OUT_FOLDER_METHOD, JAVA_LEARNING_DATA_FOLDER_BASE)
 
     # 8. Run tokenizer to convert code fragments into vectors/matrices of numbers that can be fed to neural network.
-    #tokenizer_runner.tokenize("Java", JAVA_LEARNING_DATA_FOLDER_BASE, JAVA_TOKENIZER_OUT_PATH, TOKENIZER_EXE_PATH)
+    tokenizer_runner.tokenize("Java", JAVA_LEARNING_DATA_FOLDER_BASE, JAVA_TOKENIZER_OUT_PATH, TOKENIZER_EXE_PATH)

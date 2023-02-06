@@ -6,7 +6,7 @@ LOC_THRESHOLD = 10000
 QUALITY_SCORE_THRESHOLD = 10
 QSCORED_USER_NAME = "hmnandani@gmail.com"
 QSCORED_API_KEY = "2e300907a35b8ea1c33413876e5eb58ecde0501a" # fake; just for example. Login to qscored.com to obtain your free key
-GITHUB_API_TOKEN = "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" # fake; just for example. 
+GITHUB_API_TOKEN = "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" # fake; just for example. 
 
 # Response example:
 # b'[{"project_name":"BuildItBigger","uuid":"60f10a8b-35eb-4a84-a15d-f332c33e598b","score":0.63,"rank":27,"loc":143187,"lang":"java"}]'
@@ -23,7 +23,7 @@ def _get_project_info(prj_name, prj_link):
         'start_index': 0,
     }
     url = "https://qscored.com/api/search_project/"
-    response = requests.post(url=url, data=data, headers=headers, )
+    response = requests.post(url=url, data=data, headers=headers, timeout=10 )
     if response.status_code == 200 and response.text == '{"reason":"No Project associated."}':
         return None
     print(response.content)
