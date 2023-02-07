@@ -187,7 +187,7 @@ def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_sampl
 
     gc.collect()
     max_input_length = get_outlier_threshold(data_path, z=1)
-    print('calculated outlier threshold is'+max_input_length)
+    print('calculated outlier threshold is'+str(max_input_length))
     all_inputs = []
     # Positive cases
     folder_path = os.path.join(data_path, "Positive")
