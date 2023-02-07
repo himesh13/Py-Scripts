@@ -183,9 +183,11 @@ def get_data_balanced(data_path, train_validate_ratio=0.7, max_training_samples=
 
 
 def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_samples=5000, max_eval_samples=150000):
+    print('In method get_data_autoencoder')
+
     gc.collect()
     max_input_length = get_outlier_threshold(data_path, z=1)
-
+    print('calculated outlier threshold is'+max_input_length)
     all_inputs = []
     # Positive cases
     folder_path = os.path.join(data_path, "Positive")
@@ -615,6 +617,7 @@ def handle_overloaded_methods(path):
 
 
 def _get_outlier_threshold(path, z, is_c2v):
+    print('Getting outlier threshold via inner method. The path passed is '+path)
     lengths = []
     for root, dirs, files in os.walk(path):
         for f in files:
@@ -622,6 +625,7 @@ def _get_outlier_threshold(path, z, is_c2v):
                 continue
             filepath = os.path.join(root, f)
             with open(filepath, "r", errors='ignore') as file:
+                print('Working with file'+file)
                 for line in file:
                     input_str = line.replace("\t", " ")
                     if is_c2v:
@@ -629,12 +633,17 @@ def _get_outlier_threshold(path, z, is_c2v):
                     else:
                         np_arr = np.fromstring(input_str, dtype=np.int32, sep=" ")
                     cur_width = len(np_arr)
+                    print('cur_width: '+cur_width)
                     lengths.append(cur_width)
+    
+    print(lengths)
+    print(compute_max(lengths,z=z))
     return compute_max(lengths, z=z)
 
 
 # The second parameter is used to specify the threshold for outlier removal
 def get_outlier_threshold(path, z=1, is_c2v=False):
+    print('Getting outlier_threshold')
     len1 = _get_outlier_threshold(os.path.join(path, "Positive"), z, is_c2v)
     len2 = _get_outlier_threshold(os.path.join(path, "Negative"), z, is_c2v)
     if len1 > len2:

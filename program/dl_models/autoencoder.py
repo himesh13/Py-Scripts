@@ -263,7 +263,7 @@ def compute_metrics(conf_matrix):
 
 
 def get_all_data(data_path, smell):
-    print("reading data...")
+    print("reading data from method get_all_data")
     max_eval_samples = 150000
     if smell in ["MultifacetedAbstraction", "FeatureEnvy"]:
         max_eval_samples = 50000
@@ -298,6 +298,7 @@ def get_out_file(smell, model):
 
 
 def main_lstm(smell, data_path, skip_iter=-1):
+    print('IN method main_lstm. smell is '+smell+' data path is '+data_path)
     input_data = get_all_data(data_path, smell)
     layers = [1, 2]
     encoding_dim = [8, 16, 32]
