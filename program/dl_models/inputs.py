@@ -625,7 +625,7 @@ def _get_outlier_threshold(path, z, is_c2v):
                 continue
             filepath = os.path.join(root, f)
             with open(filepath, "r", errors='ignore') as file:
-                print('Working with file'+file)
+                print('Working with file'+os.path.abspath(file))
                 for line in file:
                     input_str = line.replace("\t", " ")
                     if is_c2v:
