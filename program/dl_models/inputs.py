@@ -192,7 +192,7 @@ def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_sampl
     # Positive cases
     folder_path = os.path.join(data_path, "Positive")
     pos_data_arr = _retrieve_data(folder_path, max_input_length)
-    shuffle(pos_data_arr)
+    #shuffle(pos_data_arr)
     total_positive_cases = len(pos_data_arr)
 
     # total_training_positive_cases = int(train_validate_ratio * total_positive_cases)
@@ -201,7 +201,7 @@ def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_sampl
     # Negative cases
     folder_path = os.path.join(data_path, "Negative")
     neg_data_arr = _retrieve_data(folder_path, max_input_length)
-    shuffle(neg_data_arr)
+    #shuffle(neg_data_arr)
     total_negative_cases = len(neg_data_arr)
 
     total_training_negative_cases = int(train_validate_ratio * total_negative_cases)
@@ -239,8 +239,8 @@ def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_sampl
     training_data = training_data_arr.reshape((len(training_data_arr), max_input_length))
     # eval_data = eval_data_arr.reshape((len(eval_labels), max_input_length, 1))
     eval_data = eval_data_arr.reshape((len(eval_labels), max_input_length))
-    training_data = shuffle(training_data)
-    eval_data, eval_labels = shuffle(eval_data, eval_labels)
+   # training_data = shuffle(training_data)
+    #eval_data, eval_labels = shuffle(eval_data, eval_labels)
 
     return training_data, eval_data, eval_labels, max_input_length
 

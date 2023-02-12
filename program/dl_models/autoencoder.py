@@ -188,6 +188,8 @@ def autoencoder_lstm(data, smell, layers=1, encoding_dimension=8, no_of_epochs=1
                      is_final=False):
     data.train_data = data.train_data.reshape((len(data.train_data), data.max_input_length, 1))
     data.eval_data = data.eval_data.reshape((len(data.eval_labels), data.max_input_length, 1))
+    print('DATAAAAAAAAAAAAAAAAA'+data.train_data)
+    print('DAAOOOAAAAAAAAAAAAAAAAA'+data.eval_data)
 
     encoding_dim = encoding_dimension
     input_layer = Input(shape=(data.max_input_length, 1))
@@ -266,7 +268,7 @@ def get_all_data(data_path, smell):
     print("reading data from method get_all_data")
     max_eval_samples = 150000
     if smell in ["MultifacetedAbstraction", "FeatureEnvy"]:
-        max_eval_samples = 50000
+        max_eval_samples = 500000
 
     train_data, eval_data, eval_labels, max_input_length = \
         inputs.get_data_autoencoder(data_path,
@@ -300,6 +302,7 @@ def get_out_file(smell, model):
 def main_lstm(smell, data_path, skip_iter=-1):
     print('IN method main_lstm. smell is '+smell+' data path is '+data_path)
     input_data = get_all_data(data_path, smell)
+
     layers = [1, 2]
     encoding_dim = [8, 16, 32]
     epochs = 10
@@ -340,7 +343,7 @@ def main_lstm(smell, data_path, skip_iter=-1):
 def main_dense(smell, data_path, max_encoding_dim=1024):
     input_data = get_all_data(data_path, smell)
     layers = [1, 2]
-    # batch_sizes = [32, 64, 128, 256, 512]
+    batch_sizes = [32, 64, 128, 256, 512]
     max_encoding_dimension = min(max_encoding_dim, input_data.max_input_length)
     encoding_dim = [int(max_encoding_dimension / 4), int(max_encoding_dimension / 2), int(max_encoding_dimension)]
     epochs = 20
@@ -350,12 +353,12 @@ def main_dense(smell, data_path, max_encoding_dim=1024):
     for layer in layers:
         for bottleneck in [True]:
             for encoding in encoding_dim:
-                # for batch_size in batch_sizes:
+             for batch_size in batch_sizes:
                 start_time = time.time()
                 try:
                     optimal_threshold, max_pr, max_re, max_f1 = autoencoder_dense(input_data, smell, layers=layer,
                                                                                   epochs=epochs,
-                                                                                  # batch_size=batch_size,
+                                                                                   batch_size=batch_size,
                                                                                   encoding_dimension=encoding,
                                                                                   with_bottleneck=bottleneck)
                 except ValueError as error:
