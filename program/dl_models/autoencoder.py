@@ -188,8 +188,8 @@ def autoencoder_lstm(data, smell, layers=1, encoding_dimension=8, no_of_epochs=1
                      is_final=False):
     data.train_data = data.train_data.reshape((len(data.train_data), data.max_input_length, 1))
     data.eval_data = data.eval_data.reshape((len(data.eval_labels), data.max_input_length, 1))
-    print('DATAAAAAAAAAAAAAAAAA'+data.train_data)
-    print('DAAOOOAAAAAAAAAAAAAAAAA'+data.eval_data)
+    #print('DATAAAAAAAAAAAAAAAAA'+data.train_data)
+    #print('DAAOOOAAAAAAAAAAAAAAAAA'+data.eval_data)
 
     encoding_dim = encoding_dimension
     input_layer = Input(shape=(data.max_input_length, 1))
