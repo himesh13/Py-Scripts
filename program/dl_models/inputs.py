@@ -625,7 +625,7 @@ def _get_outlier_threshold(path, z, is_c2v):
                 continue
             filepath = os.path.join(root, f)
             with open(filepath, "r", errors='ignore') as file:
-                print('Working with file'+ filepath)
+                #print('Working with file'+ filepath)
                 for line in file:
                     input_str = line.replace("\t", " ")
                     if is_c2v:
@@ -633,11 +633,11 @@ def _get_outlier_threshold(path, z, is_c2v):
                     else:
                         np_arr = np.fromstring(input_str, dtype=np.int32, sep=" ")
                     cur_width = len(np_arr)
-                    print('cur_width: '+str(cur_width))
+                    #print('cur_width: '+str(cur_width))
                     lengths.append(cur_width)
     
-    print(' '.join(map(str, lengths)))
-    print(compute_max(lengths,z=z))
+    #print(' '.join(map(str, lengths)))
+    #print(compute_max(lengths,z=z))
     return compute_max(lengths, z=z)
 
 

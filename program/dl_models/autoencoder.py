@@ -55,8 +55,8 @@ def autoencoder_dense(data, smell, layers=1, encoding_dimension=32, epochs=10, w
                         metrics=['accuracy'])
     autoencoder.summary()
 
-    batch_sizes = [32, 64, 128]
-    # batch_sizes = [32, 64, 128, 256, 512]
+    #batch_sizes = [32, 64, 128]
+    batch_sizes = [32, 64, 128, 256, 512]
     b_size = int(len(data.train_data) / batch_sizes[len(batch_sizes) - 1])
     if b_size > len(batch_sizes) - 1:
         b_size = len(batch_sizes) - 1
@@ -67,19 +67,19 @@ def autoencoder_dense(data, smell, layers=1, encoding_dimension=32, epochs=10, w
     history = autoencoder.fit(data.train_data,
                               data.train_data,
                               epochs=epochs,
-                              # batch_size=batch_size,
+                               #batch_size=batch_size,
                               batch_size=batch_sizes[b_size],
                               verbose=1,
                               validation_split=val_split,
                               shuffle=True).history
 
-    # plt.plot(history['loss'])
-    # plt.plot(history['val_loss'])
-    # plt.title('model loss')
-    # plt.ylabel('loss')
-    # plt.xlabel('epoch')
-    # plt.legend(['train', 'test'], loc='upper right')
-    # plt.show()
+    plt.plot(history['loss'])
+    plt.plot(history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper right')
+    plt.show()
 
     predictions = autoencoder.predict(data.eval_data)
     mse = np.mean(np.power(data.eval_data - predictions, 2), axis=1)
@@ -313,6 +313,7 @@ def main_lstm(smell, data_path, skip_iter=-1):
     for layer in layers:
         for bottleneck in [True]:
             for encoding in encoding_dim:
+                print('Encoding for dimension :'+str(encoding))
                 if cur_iter <= skip_iter:
                     cur_iter += 1
                     continue
