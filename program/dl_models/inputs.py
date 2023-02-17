@@ -228,6 +228,8 @@ def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_sampl
     eval_data = []
     eval_data.extend(pos_data_arr[len(pos_data_arr) - total_eval_positive_cases:])
     eval_data.extend(neg_data_arr[len(neg_data_arr) - total_eval_negative_cases:])
+    print('EVVALL DATA ')
+    print(eval_data)
     eval_data_arr = np.array(eval_data, dtype=np.float32)
 
     eval_labels = np.empty(shape=[len(eval_data_arr)], dtype=np.float32)
