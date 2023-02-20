@@ -239,6 +239,7 @@ def get_data_autoencoder(data_path, train_validate_ratio=0.7, max_training_sampl
     # train_data, eval_data, train_labels, eval_labels = train_test_split(np_arr_all, labels, train_size=train_validate_ratio)
     # training_data = training_data_arr.reshape((len(training_data_arr), max_input_length, 1))
     training_data = training_data_arr.reshape((len(training_data_arr), max_input_length))
+    print('shape of training data'+training_data_arr.shape)
     # eval_data = eval_data_arr.reshape((len(eval_labels), max_input_length, 1))
     eval_data = eval_data_arr.reshape((len(eval_labels), max_input_length))
    # training_data = shuffle(training_data)
