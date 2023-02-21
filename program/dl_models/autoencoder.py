@@ -245,7 +245,7 @@ def autoencoder_lstm(data, smell, layers=1, encoding_dimension=8, no_of_epochs=1
     # plt.xlabel('epoch')
     # plt.legend(['train', 'test'], loc='upper right')
     # plt.show()
-
+    autoencoder.save('lstm_model.h5')
     predictions = autoencoder.predict(data.eval_data)
     predictions = predictions.reshape(predictions.shape[0], predictions.shape[1])
     data.eval_data = data.eval_data.reshape(data.eval_data.shape[0], data.eval_data.shape[1])
@@ -303,8 +303,8 @@ def main_lstm(smell, data_path, skip_iter=-1):
     print('IN method main_lstm. smell is '+smell+' data path is '+data_path)
     input_data = get_all_data(data_path, smell)
 
-    layers = [1, 2]
-    encoding_dim = [8, 16, 32]
+    layers = [1]
+    encoding_dim = [8]
     epochs = 10
     outfile = get_out_file(smell, "rnn")
     write_result(outfile,
