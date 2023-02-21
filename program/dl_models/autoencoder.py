@@ -303,7 +303,7 @@ def main_lstm(smell, data_path, skip_iter=-1):
     print('IN method main_lstm. smell is '+smell+' data path is '+data_path)
     input_data = get_all_data(data_path, smell)
 
-    layers = [1]
+    layers = [1,2]
     encoding_dim = [8]
     epochs = 10
     outfile = get_out_file(smell, "rnn")
