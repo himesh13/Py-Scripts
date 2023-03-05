@@ -140,13 +140,13 @@ def autoencoder_cnn(data, config):
                               validation_split=0.2,
                               shuffle=True).history
 
-    # plt.plot(history['loss'])
-    # plt.plot(history['val_loss'])
-    # plt.title('model loss')
-    # plt.ylabel('loss')
-    # plt.xlabel('epoch')
-    # plt.legend(['train', 'test'], loc='upper right')
-    # plt.show()
+    plt.plot(history['loss'])
+    plt.plot(history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper right')
+    plt.show()
 
     predictions = autoencoder.predict(data.eval_data)
     predictions = predictions.reshape(predictions.shape[0], predictions.shape[1])
@@ -171,11 +171,12 @@ def find_optimal(error_df):
     max_f1 = 0
     max_pr = 0
     max_re = 0
-    for threshold in range(1000, 400000, 5000):
+    for threshold in range(400000, 4050730, 500000):
         print("Threshold: " + str(threshold))
         y_pred = [1 if e > threshold else 0 for e in error_df.Reconstruction_error.values]
         conf_matrix = confusion_matrix(error_df.True_class, y_pred)
         precision, recall, f1 = compute_metrics(conf_matrix)
+        print("F1 : " +str(f1)+" Recall : "+str(recall)+" precision : "+str(precision))
         if f1 > max_f1:
             max_f1 = f1
             optimal_threshold = threshold
@@ -212,7 +213,7 @@ def autoencoder_lstm(data, smell, layers=1, encoding_dimension=8, no_of_epochs=1
                           dropout=0.1)(prev_layer)
     for j in range(no_of_layers - 1, -1, -1):
         decoder = LSTM(int(encoding_dim / pow(2, j)),
-                       # activation='relu',
+                        #activation='relu',
                        return_sequences=True,
                        recurrent_dropout=0.1,
                        dropout=0.1)(prev_layer)
@@ -238,13 +239,13 @@ def autoencoder_lstm(data, smell, layers=1, encoding_dimension=8, no_of_epochs=1
                               validation_split=0.2,
                               shuffle=True).history
 
-    # plt.plot(history['loss'])
-    # plt.plot(history['val_loss'])
-    # plt.title('model loss')
-    # plt.ylabel('loss')
-    # plt.xlabel('epoch')
-    # plt.legend(['train', 'test'], loc='upper right')
-    # plt.show()
+    plt.plot(history['loss'])
+    plt.plot(history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper right')
+    plt.show()
     autoencoder.save('lstm_model.h5')
     predictions = autoencoder.predict(data.eval_data)
     predictions = predictions.reshape(predictions.shape[0], predictions.shape[1])
@@ -303,9 +304,9 @@ def main_lstm(smell, data_path, skip_iter=-1):
     print('IN method main_lstm. smell is '+smell+' data path is '+data_path)
     input_data = get_all_data(data_path, smell)
 
-    layers = [1,2]
+    layers = [2]
     encoding_dim = [8]
-    epochs = 10
+    epochs = 15
     outfile = get_out_file(smell, "rnn")
     write_result(outfile,
                  "units,threshold,epoch,bottleneck,layer,precision,recall,f1,time\n")

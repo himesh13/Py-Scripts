@@ -14,10 +14,11 @@ import time
 import metrics_util
 import plot_util
 from sklearn.dummy import DummyClassifier
+from sklearn.metrics import classification_report, confusion_matrix
 
 # --- Parameters --
 DIM = "1d"
-C2V = True # It means whether we are analyzing plain source code that is tokenized (False) or vectors from Code2Vec (True)
+C2V = False # It means whether we are analyzing plain source code that is tokenized (False) or vectors from Code2Vec (True)
 
 if C2V:
     # TOKENIZER_OUT_PATH = "/users/pa18/tushar/smellDetectionML/data/c2v_vectors/"
@@ -27,8 +28,8 @@ if C2V:
 else:
     # TOKENIZER_OUT_PATH = "../../data/tokenizer_out_cs/"
     # OUT_FOLDER = "../results/rq1/raw_temp"
-    TOKENIZER_OUT_PATH = "/users/pa18/tushar/smellDetectionML/data/tokenizer_out/"
-    OUT_FOLDER = "/users/pa18/tushar/smellDetectionML/learning_smells/results/rq1/raw"
+    TOKENIZER_OUT_PATH = r"C:\Users\Himesh\Documents\thesis\trial2\tokenizer_out"
+    OUT_FOLDER = r"C:\Users\Himesh\Documents\thesis\trial2\output"
 
 TRAIN_VALIDATE_RATIO = 0.7
 CLASSIFIER_THRESHOLD = 0.7
@@ -39,6 +40,8 @@ CLASSIFIER_THRESHOLD = 0.7
 
 def embedding_lstm(data, config, smell, out_folder=OUT_FOLDER, dim=DIM, iteration=0, is_final=False):
     tf.keras.backend.clear_session()
+    #print(data.train_data)
+    #print(data.eval_data[0:1])
     max_features = int(max(np.max(data.train_data), np.max(data.eval_data)))
     print("max features: " + str(max_features))
 
@@ -65,6 +68,7 @@ def embedding_lstm(data, config, smell, out_folder=OUT_FOLDER, dim=DIM, iteratio
     if os.path.exists(best_model_filepath):
         print("deleting the old weights file..")
         os.remove(best_model_filepath)
+    model.save('encoder_lstm_emb.h5')
     checkpoint = tf.keras.callbacks.ModelCheckpoint(filepath=best_model_filepath, monitor='val_loss', verbose=1,
                                                     save_best_only=True)
     callbacks_list = [earlystop, checkpoint]
@@ -90,13 +94,14 @@ def embedding_lstm(data, config, smell, out_folder=OUT_FOLDER, dim=DIM, iteratio
                   callbacks=callbacks_list)
         stopped_epoch = earlystop.stopped_epoch
         model.load_weights(best_model_filepath)
-
-    # y_pred = model.predict(data.eval_data).ravel()
-    # y_pred = model.predict_classes(data.eval_data)
+    print(data.eval_data.shape)
+    y_pred = model.predict(data.eval_data)
+    #y_pred=np.argmax(y_pred,axis=1)
+   # y_pred = model.predict_classes(data.eval_data)
     # We manually apply classification threshold
-    prob = model.predict_proba(data.eval_data)
-    y_pred = inputs.get_predicted_y(prob, CLASSIFIER_THRESHOLD)
-
+    #prob = model.predict_proba(data.eval_data)
+    #y_pred = inputs.get_predicted_y(prob, CLASSIFIER_THRESHOLD)
+    print(confusion_matrix(data.eval_labels, y_pred))
     auc, accuracy, precision, recall, f1, average_precision, fpr, tpr = \
         metrics_util.get_all_metrics(model, data.eval_data, data.eval_labels, y_pred)
 
@@ -159,7 +164,7 @@ def main(data_path, smell, skip_iter=-1, iterations_to_process=100):
     rnn_layers = {1, 2}
     emb_outputs = [16, 32]
     lstms_units = [32, 64, 128]
-    epochs = [50]
+    epochs = [5]
     dropouts = [0.2]
 
     total_iterations = len(emb_outputs) * len(lstms_units) * len(rnn_layers) * len(epochs) * len(dropouts)
@@ -251,22 +256,22 @@ def run_final():
     smell = "ComplexMethod"
     data_path1 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
     input_data1 = get_all_data(data_path1, smell)
-    run_rnn_with_best_params(smell, input_data=input_data1, emb_output=32, rnn_layers=1, lstm_units=64, epochs=24)
+    run_rnn_with_best_params(smell, input_data=input_data1, emb_output=32, rnn_layers=1, lstm_units=64, epochs=5)
 
-    smell = "ComplexConditional"
-    data_path2 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
-    input_data2 = get_all_data(data_path2, smell)
-    run_rnn_with_best_params(smell, input_data=input_data2, emb_output=32, rnn_layers=1, lstm_units=64, epochs=3)
+    # smell = "ComplexConditional"
+    # data_path2 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
+    # input_data2 = get_all_data(data_path2, smell)
+    # run_rnn_with_best_params(smell, input_data=input_data2, emb_output=32, rnn_layers=1, lstm_units=64, epochs=3)
 
-    smell = "FeatureEnvy"
-    data_path3 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
-    input_data3 = get_all_data(data_path3, smell)
-    run_rnn_with_best_params(smell, input_data=input_data3, emb_output=16, rnn_layers=2, lstm_units=64, epochs=16)
+    # smell = "FeatureEnvy"
+    # data_path3 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
+    # input_data3 = get_all_data(data_path3, smell)
+    # run_rnn_with_best_params(smell, input_data=input_data3, emb_output=16, rnn_layers=2, lstm_units=64, epochs=16)
 
-    smell = "MultifacetedAbstraction"
-    data_path4 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
-    input_data4 = get_all_data(data_path4, smell)
-    run_rnn_with_best_params(smell, input_data=input_data4, emb_output=16, rnn_layers=2, lstm_units=128, epochs=11)
+    # smell = "MultifacetedAbstraction"
+    # data_path4 = os.path.join(os.path.join(TOKENIZER_OUT_PATH, smell), DIM)
+    # input_data4 = get_all_data(data_path4, smell)
+    # run_rnn_with_best_params(smell, input_data=input_data4, emb_output=16, rnn_layers=2, lstm_units=128, epochs=11)
 
 
 def measure_random_performance():
